@@ -15,13 +15,13 @@ def token_required(f):
             token = auth_header.split(" ")[1]
 
         if not token:
-            return {'message': 'Token is missing!'}, 401
+            return {'success': False, 'error': 'Token is missing!'}, 401
 
         try:
             data = jwt.decode(token, os.getenv('SECRET_KEY'))
             current_user = User.query.get(data['sub'])
         except:
-            return {'message': 'Token is invalid!'}, 401
+            return {'success': False, 'error': 'Token is invalid!'}, 401
 
         return f(current_user, *args, **kwargs)
 

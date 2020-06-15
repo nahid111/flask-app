@@ -20,6 +20,7 @@ python-dotenv = "*"
 pyjwt = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
+pyopenssl = "*"
 
 [requires]
 python_version = "3.8"

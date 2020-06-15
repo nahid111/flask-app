@@ -23,3 +23,7 @@ $ pipenv run python mange.py db upgrade
 ```bash
 $ pipenv run flask run
 ```
+- or
+```bash
+$ pipenv run flask run --cert=adhoc
+```
