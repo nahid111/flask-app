@@ -21,6 +21,7 @@ pyjwt = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 pyopenssl = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"

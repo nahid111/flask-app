@@ -27,6 +27,10 @@ $ pipenv run flask run
 ```bash
 $ pipenv run flask run --cert=adhoc
 ```
+- or
+```bash
+$ pipenv run gunicorn -b 0.0.0.0:5000 --access-logfile - --reload "app:app"
+```
 
 
 ## in case
@@ -40,6 +44,14 @@ $ pipenv lock -r > requirements.txt
 - run
 ```bash
 $ docker-compose up -d
+```
+- exec into the app container and make DB migrations
+```bash
+$ docker exec -it CONTAINER_ID bash
+```
+- see app logs
+```bash
+$ docker logs -f CONTAINER_ID
 ```
 - clean up
 ```bash

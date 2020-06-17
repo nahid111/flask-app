@@ -36,6 +36,11 @@ services:
     build: .
     container_name: flask_app
     # command: python3 run.py
+    command: >
+      gunicorn -b 0.0.0.0:5000
+        --access-logfile -
+        --reload
+        "app:app"
     depends_on:
       - mysqlDB
     links:
