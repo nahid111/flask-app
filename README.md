@@ -27,3 +27,21 @@ $ pipenv run flask run
 ```bash
 $ pipenv run flask run --cert=adhoc
 ```
+
+
+## in case
+- generate requirements.txt
+```bash
+$ pipenv lock -r > requirements.txt
+```
+
+## Run with Docker
+- Make sure [Docker](https://docs.docker.com/install/ "Docker") & [Docker-Compose](https://docs.docker.com/compose/install/ "Docker-Compose") are installed
+- run
+```bash
+$ docker-compose up -d
+```
+- clean up
+```bash
+$ docker-compose down -v
+```

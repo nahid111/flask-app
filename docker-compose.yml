@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+
+  # MySql
+  mysqlDB:
+    image: "mysql:5.7"
+    env_file:
+      - '.env'
+    container_name: flask_app_mysql
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./datadir/:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  
+  # phpMyAdmin
+  phpmyadmin:
+    depends_on:
+      - mysqlDB
+    image: phpmyadmin/phpmyadmin
+    env_file:
+      - '.env'
+    container_name: flask_app_phpMyAdmin
+    restart: always
+    ports:
+      - 8090:80
+    environment:
+      PMA_HOST: mysqlDB
+  
+  # App
+  app:
+    image: nahid111/flask_app
+    env_file:
+      - '.env'
+    build: .
+    container_name: flask_app
+    # command: python3 run.py
+    depends_on:
+      - mysqlDB
+    links:
+      - "mysqlDB:localhost"
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./flask_app:/opt/flask_app
+
+
+
