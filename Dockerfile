@@ -1,7 +1,4 @@
 FROM python:3.8-slim
-
-# Setting Labels
-# ================================================
 LABEL MAINTAINER="Muhammad Nahid"
 LABEL "Maintainer email"="mdnahid22@gmail.com"
 LABEL version="1.0"
@@ -22,6 +19,5 @@ COPY . .
 
 # run app
 # CMD gunicorn -b 0.0.0.0:8000 --access-logfile - "app.app:create_app()"
-# CMD [ "python", "./run.py" ]
 CMD flask run
 
