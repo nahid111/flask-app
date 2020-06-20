@@ -1,4 +1,4 @@
-from app import ma
+from app_extensions import ma
 from models.models import User
 
 

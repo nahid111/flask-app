@@ -15,9 +15,9 @@ $ pipenv install
 - Set the database credentials inside .env
 - Make DB Migrations - 
 ```bash
-$ pipenv run python mange.py db init
-$ pipenv run python mange.py db migrate
-$ pipenv run python mange.py db upgrade
+$ pipenv run python manage.py db init
+$ pipenv run python manage.py db migrate
+$ pipenv run python manage.py db upgrade
 ```
 - run the app
 ```bash
@@ -29,7 +29,7 @@ $ pipenv run flask run --cert=adhoc
 ```
 - or
 ```bash
-$ pipenv run gunicorn -b 0.0.0.0:5000 --access-logfile - --reload "app:app"
+$ pipenv run gunicorn -b 0.0.0.0:5000 --access-logfile - --reload "app:create_app()"
 ```
 
 

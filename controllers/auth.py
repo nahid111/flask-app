@@ -3,7 +3,7 @@ import jwt
 import datetime
 from flask import Blueprint, request
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import db
+from app_extensions import db
 from models.models import User
 from models.schemas import UserSchema
 from middlewares.auth import token_required

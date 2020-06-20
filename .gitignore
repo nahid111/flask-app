@@ -76,3 +76,4 @@ yarn-error.log
 
 Pipfile.lock
 /datadir
+/flask_app

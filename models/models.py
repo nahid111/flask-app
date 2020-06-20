@@ -1,6 +1,7 @@
+import os
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from datetime import datetime
-from app import app, db
+from app_extensions import db
 
 
 # ===========================================================================================
@@ -75,12 +76,12 @@ class User(db.Model):
     permissions = db.relationship('Permission', secondary=permissions_users, backref=db.backref('users', lazy='dynamic'))
 
     def get_password_reset_token(self, expires_sec=1800):
-        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        s = Serializer(os.getenv('SECRET_KEY'), expires_sec)
         return s.dumps({'user_id': self.id}).decode('utf-8')
 
     @staticmethod
     def verify_password_reset_token(token):
-        s = Serializer(app.config['SECRET_KEY'])
+        s = Serializer(os.getenv('SECRET_KEY'))
         try:
             user_id = s.loads(token)['user_id']
         except:

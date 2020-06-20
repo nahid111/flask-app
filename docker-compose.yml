@@ -40,7 +40,7 @@ services:
       gunicorn -b 0.0.0.0:5000
         --access-logfile -
         --reload
-        "app:app"
+        "app:create_app()"
     depends_on:
       - mysqlDB
     links:

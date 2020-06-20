@@ -18,5 +18,5 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # run app
-# CMD gunicorn -b 0.0.0.0:8000 --access-logfile - "app:app"
+CMD gunicorn -b 0.0.0.0:8000 --access-logfile - "app:create_app()"
 
