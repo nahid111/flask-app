@@ -27,15 +27,25 @@ services:
       - 8090:80
     environment:
       PMA_HOST: mysqlDB
+
+  # Redis
+  redis:
+    image: 'redis:5'
+    env_file:
+      - '.env'
+    container_name: flask_app_redis
+    command: redis-server --requirepass secretPassword
+    volumes:
+      - './redis:/var/lib/redis/data'
+    ports:
+      - '6379:6379'
   
   # App
   app:
-    image: nahid111/flask_app
     env_file:
       - '.env'
     build: .
     container_name: flask_app
-    # command: python3 run.py
     command: >
       gunicorn -b 0.0.0.0:5000
         --access-logfile -
@@ -47,8 +57,19 @@ services:
       - "mysqlDB:localhost"
     ports:
       - "5000:5000"
+    # bind our project directory to the container WORKDIR for tracking changes
     volumes:
-      - ./flask_app:/opt/flask_app
+      - '.:/flask_app'
+
+  # Celery
+  celery:
+    env_file:
+      - '.env'
+    build: .
+    container_name: flask_app_celery
+    command: celery worker -l info -A tasks.tasks
+    volumes:
+      - '.:/flask_app'
 
 
 

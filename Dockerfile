@@ -10,11 +10,12 @@ RUN mkdir -p $INSTALL_PATH
 # set the app directory as Work Directory
 WORKDIR $INSTALL_PATH
 
-# copy the requirements.txt inside workdir
+# copy the requirements.txt
 COPY requirements.txt requirements.txt
 #  install dependencies
 RUN pip install -r requirements.txt
-# copy all files to workdir
+
+# copy project files <src> to WORKDIR <dest>
 COPY . .
 
 # run app

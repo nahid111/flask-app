@@ -7,7 +7,6 @@ from app_extensions import db
 from models.models import User
 from models.schemas import UserSchema
 from middlewares.auth import token_required
-from utils.send_mail import send_mail
 
 auth_module = Blueprint('auth', __name__)
 
@@ -92,7 +91,9 @@ def register():
                    f'</a>'
                    f'<p style="color: red;">This link will expire shortly</p>'
                    f'</div>')
-        send_mail(email, subject, message)
+
+        from tasks.tasks import send_mail_task
+        send_mail_task.apply_async(args=[email, subject, message])
 
     except Exception as e:
         print('\x1b[91m' + str(e) + '\x1b[0m')
@@ -155,7 +156,9 @@ def forgot_password():
                    f'</a>'
                    f'<p style="color: red;">This link will expire shortly</p>'
                    f'</div>')
-        send_mail(email, subject, message)
+
+        from tasks.tasks import send_mail_task
+        send_mail_task.apply_async(args=[email, subject, message])
 
     except Exception as e:
         print('\x1b[91m' + str(e) + '\x1b[0m')
@@ -190,7 +193,7 @@ def reset_password(token):
         pass
 
     # Validate
-    if not data or password:
+    if not data or not password:
         return {'success': False, 'error': 'Password is Required'}, 401
 
     # Hash Password
@@ -214,4 +217,3 @@ def get_current_user(current_user):
     user_schema = UserSchema()
     user_data = user_schema.dump(current_user)
     return {'success': True, 'data': user_data}, 200
-
