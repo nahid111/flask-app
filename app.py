@@ -3,23 +3,13 @@ from dotenv import load_dotenv
 from flask import Flask
 from celery import Celery
 from app_extensions import db, ma, mail
+from error_handlers import error_handler
 from controllers.auth import auth_module
 
 # load dotenv in the base root
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
 dotenv_path = os.path.join(APP_ROOT, '.env')
 load_dotenv(dotenv_path)
-
-
-# ===================================================================
-#                        Handle App Errors
-# ===================================================================
-# @app.errorhandler(Exception)
-# def handle_error(error):
-#     # print in red
-#     print('\x1b[91m' + str(error) + '\x1b[0m')
-#     # message = [str(x) for x in error.args]
-#     return {'success': False, 'error': "internal server error"}, 500
 
 
 def create_app(settings_override=None):
@@ -39,6 +29,7 @@ def create_app(settings_override=None):
     app.register_blueprint(auth_module, url_prefix='/api/v1/auth')
 
     extensions(app)
+    error_handler(app)
 
     return app
 
